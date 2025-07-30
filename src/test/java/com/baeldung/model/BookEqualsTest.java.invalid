@@ -1,5 +1,3 @@
-//This test file is marked invalid as it contains compilation errors. Change the extension to of this file to .java, to manually edit its contents
-
 
 // ********RoostGPT********
 /*
@@ -147,11 +145,14 @@ Validation:
   Confirm that primary key-like fields are given precedence in determining equality.  
 
 
+
+roost_feedback [30/07/2025, 12:07:52 PM]:-\sFormat\sthe\stest\n-\sImprove\sassertions
 */
 
 // ********RoostGPT********
 
 package com.baeldung.model;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -164,103 +165,93 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 public class BookEqualsTest {
+
     @Test
     @Tag("valid")
     public void validateEqualityForIdenticalObjects() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
         Book book2 = new Book("Author A", "Title A", "ISBN A");
-        
-        boolean result = book1.equals(book2);
-        
-        assertTrue(result, "Expected identical books to be equal");
+
+        assertTrue(book1.equals(book2), "Expected identical books to be equal");
     }
+
     @Test
     @Tag("invalid")
     public void validateInequalityWithDifferentIsbn() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
         Book book2 = new Book("Author A", "Title A", "ISBN B");
-        
-        boolean result = book1.equals(book2);
-        
-        assertFalse(result, "Expected books with different ISBNs to be unequal");
+
+        assertFalse(book1.equals(book2), "Expected books with different ISBNs to be unequal");
     }
+
     @Test
     @Tag("invalid")
     public void validateInequalityWithDifferentAuthor() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
         Book book2 = new Book("Author B", "Title A", "ISBN A");
-        
-        boolean result = book1.equals(book2);
-        
-        assertFalse(result, "Expected books with different authors to be unequal");
+
+        assertFalse(book1.equals(book2), "Expected books with different authors to be unequal");
     }
+
     @Test
     @Tag("invalid")
     public void validateInequalityWithDifferentTitle() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
         Book book2 = new Book("Author A", "Title B", "ISBN A");
-        
-        boolean result = book1.equals(book2);
-        
-        assertFalse(result, "Expected books with different titles to be unequal");
+
+        assertFalse(book1.equals(book2), "Expected books with different titles to be unequal");
     }
+
     @Test
     @Tag("invalid")
     public void validateInequalityWhenObjectIsNull() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
         Book book2 = null;
-        
-        boolean result = book1.equals(book2);
-        
-        assertFalse(result, "Expected comparison with null to return false");
+
+        assertFalse(book1.equals(book2), "Expected comparison with null to return false");
     }
+
     @Test
     @Tag("valid")
     public void validateEqualityWhenSameInstance() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
-        
-        boolean result = book1.equals(book1);
-        
-        assertTrue(result, "Expected comparison with same instance to be true");
+
+        assertTrue(book1.equals(book1), "Expected comparison with same instance to be true");
     }
+
     @Test
     @Tag("invalid")
     public void validateInequalityForDifferentTypes() {
         Book book1 = new Book("Author A", "Title A", "ISBN A");
         String otherObject = "Some String";
-        
-        boolean result = book1.equals(otherObject);
-        
-        assertFalse(result, "Expected comparison with different types to return false");
+
+        assertFalse(book1.equals(otherObject), "Expected comparison with different types to return false");
     }
+
     @Test
     @Tag("valid")
     public void validateEqualityWhenAllFieldsNull() {
         Book book1 = new Book(null, null, null);
         Book book2 = new Book(null, null, null);
-        
-        boolean result = book1.equals(book2);
-        
-        assertTrue(result, "Expected books with all fields null to be equal");
+
+        assertTrue(book1.equals(book2), "Expected books with all fields null to be equal");
     }
+
     @Test
     @Tag("invalid")
     public void validateInequalityWithPartiallyNullFields() {
         Book book1 = new Book("Author A", null, "ISBN A");
         Book book2 = new Book("Author A", "Title A", null);
-        
-        boolean result = book1.equals(book2);
-        
-        assertFalse(result, "Expected books with partially null fields to be unequal");
+
+        assertFalse(book1.equals(book2), "Expected books with partially null fields to be unequal");
     }
+
     @Test
     @Tag("invalid")
     public void validateKeyFieldBasedInequality() {
         Book book1 = new Book("Author A", "Title A", "12345");
         Book book2 = new Book("Author A", "Title A", "67890");
-        
-        boolean result = book1.equals(book2);
-        
-        assertFalse(result, "Expected books with different key fields (ISBN) to be unequal");
+
+        assertFalse(book1.equals(book2), "Expected books with different key fields (ISBN) to be unequal");
     }
 }
