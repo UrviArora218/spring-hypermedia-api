@@ -19,65 +19,63 @@ import com.baeldung.web.resource.NewBookResource;
 @RequestMapping(value = &quot;/cart&quot;)
 <span class="fc" id="L20">public class CartController implements InitializingBean {</span>
 
-	private Cart cart;
+    private Cart cart;
 
-	@Autowired
-	private BookRepository bookRepo;
+    @Autowired
+    private BookRepository bookRepo;
 
-	// read
+    // read
 
-	@RequestMapping(method = RequestMethod.GET)
-	public CartResource seeYourCart() {
-<span class="nc" id="L31">		return toResource();</span>
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public CartResource seeYourCart() {
+<span class="nc" id="L31">        return toResource();</span>
+    }
 
-	// write
+    // write
 
-	@RequestMapping(method = RequestMethod.POST)
-	public CartResource addBookToCart(@RequestBody final BookResource book) {
-<span class="nc" id="L38">		final String isbn = book.getBook().getIsbn();</span>
-<span class="nc" id="L39">		final Book bookToAdd = Checks.checkEntityExists(bookRepo.findByIsbn(book.getBook().getIsbn()),</span>
-				&quot;No Book found for isbn: &quot; + isbn);
+    @RequestMapping(method = RequestMethod.POST)
+    public CartResource addBookToCart(@RequestBody final BookResource book) {
+<span class="nc" id="L38">        final String isbn = book.getBook().getIsbn();</span>
+<span class="nc" id="L39">        final Book bookToAdd = Checks.checkEntityExists(bookRepo.findByIsbn(book.getBook().getIsbn()), &quot;No Book found for isbn: &quot; + isbn);</span>
 
-<span class="nc" id="L42">		this.cart.add(bookToAdd);</span>
-<span class="nc" id="L43">		return toResource();</span>
-	}
+<span class="nc" id="L41">        this.cart.add(bookToAdd);</span>
+<span class="nc" id="L42">        return toResource();</span>
+    }
 
-	@RequestMapping(value = &quot;/new&quot;, method = RequestMethod.POST)
-	public CartResource addNewBookToCart(@RequestBody final NewBookResource book) {
-<span class="nc" id="L48">		final String isbn = book.getBook().getIsbn();</span>
-<span class="nc" id="L49">		final Book bookToAdd = Checks.checkEntityExists(bookRepo.findByIsbn(book.getBook().getIsbn()),</span>
-				&quot;No Book found for isbn: &quot; + isbn);
+    @RequestMapping(value = &quot;/new&quot;, method = RequestMethod.POST)
+    public CartResource addNewBookToCart(@RequestBody final NewBookResource book) {
+<span class="nc" id="L47">        final String isbn = book.getBook().getIsbn();</span>
+<span class="nc" id="L48">        final Book bookToAdd = Checks.checkEntityExists(bookRepo.findByIsbn(book.getBook().getIsbn()), &quot;No Book found for isbn: &quot; + isbn);</span>
 
-<span class="nc" id="L52">		this.cart.add(bookToAdd);</span>
-<span class="nc" id="L53">		return toResource();</span>
-	}
+<span class="nc" id="L50">        this.cart.add(bookToAdd);</span>
+<span class="nc" id="L51">        return toResource();</span>
+    }
 
-	@RequestMapping(method = RequestMethod.PATCH)
-	public CartResource buy(@RequestBody final CartResource theCart) {
-<span class="nc" id="L58">		this.cart.setPurchased(theCart.isPurchased());</span>
+    @RequestMapping(method = RequestMethod.PATCH)
+    public CartResource buy(@RequestBody final CartResource theCart) {
+<span class="nc" id="L56">        this.cart.setPurchased(theCart.isPurchased());</span>
 
-<span class="nc" id="L60">		return toResource();</span>
-	}
+<span class="nc" id="L58">        return toResource();</span>
+    }
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	public CartResource clearYourCart() {
-<span class="nc" id="L65">		this.cart.getBooks().clear();</span>
-<span class="nc" id="L66">		this.cart.setPurchased(false);</span>
+    @RequestMapping(method = RequestMethod.DELETE)
+    public CartResource clearYourCart() {
+<span class="nc" id="L63">        this.cart.getBooks().clear();</span>
+<span class="nc" id="L64">        this.cart.setPurchased(false);</span>
 
-<span class="nc" id="L68">		return toResource();</span>
-	}
+<span class="nc" id="L66">        return toResource();</span>
+    }
 
-	//
+    //
 
-	private CartResource toResource() {
-<span class="nc" id="L74">		return new CartResource(this.cart.getBooks(), this.cart.isPurchased());</span>
-	}
+    private CartResource toResource() {
+<span class="nc" id="L72">        return new CartResource(this.cart.getBooks(), this.cart.isPurchased());</span>
+    }
 
-	@Override
-	public void afterPropertiesSet() {
-<span class="fc" id="L79">		this.cart = new Cart();</span>
-<span class="fc" id="L80">	}</span>
+    @Override
+    public void afterPropertiesSet() {
+<span class="fc" id="L77">        this.cart = new Cart();</span>
+<span class="fc" id="L78">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

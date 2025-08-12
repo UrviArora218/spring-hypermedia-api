@@ -29,57 +29,53 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 @RequestMapping(value = &quot;/new/books&quot;)
 <span class="nc" id="L30">public class NewBookController {</span>
 
-	@Autowired
-	private BookRepository repo;
+    @Autowired
+    private BookRepository repo;
 
-	// read
+    // read
 
-	@RequestMapping(&quot;/{isbn}&quot;)
-	public MappingJacksonValue findByIsbn(@PathVariable final String isbn) {
-<span class="nc" id="L39">		final Book book = Checks.checkEntityExists(repo.findByIsbn(isbn), &quot;No book found for isbn = &quot; + isbn);</span>
+    @RequestMapping(&quot;/{isbn}&quot;)
+    public MappingJacksonValue findByIsbn(@PathVariable final String isbn) {
+<span class="nc" id="L39">        final Book book = Checks.checkEntityExists(repo.findByIsbn(isbn), &quot;No book found for isbn = &quot; + isbn);</span>
 
-<span class="nc" id="L41">		final NewBookResource bookResource = new NewBookResource(book);</span>
-<span class="nc" id="L42">		bookResource.add(linkTo(methodOn(CartController.class).addNewBookToCart(bookResource)).withRel(&quot;add-to-cart&quot;));</span>
+<span class="nc" id="L41">        final NewBookResource bookResource = new NewBookResource(book);</span>
+<span class="nc" id="L42">        bookResource.add(linkTo(methodOn(CartController.class).addNewBookToCart(bookResource)).withRel(&quot;add-to-cart&quot;));</span>
 
-<span class="nc" id="L44">		final FilterProvider filterProvider = new SimpleFilterProvider().addFilter(&quot;bookFilter&quot;,</span>
-<span class="nc" id="L45">				SimpleBeanPropertyFilter.serializeAll());</span>
-<span class="nc" id="L46">		final MappingJacksonValue wrapper = new MappingJacksonValue(bookResource);</span>
-<span class="nc" id="L47">		wrapper.setFilters(filterProvider);</span>
+<span class="nc" id="L44">        final FilterProvider filterProvider = new SimpleFilterProvider().addFilter(&quot;bookFilter&quot;, SimpleBeanPropertyFilter.serializeAll());</span>
+<span class="nc" id="L45">        final MappingJacksonValue wrapper = new MappingJacksonValue(bookResource);</span>
+<span class="nc" id="L46">        wrapper.setFilters(filterProvider);</span>
 
-<span class="nc" id="L49">		return wrapper;</span>
-	}
+<span class="nc" id="L48">        return wrapper;</span>
+    }
 
-	@RequestMapping(value = &quot;/{isbn}&quot;, params = &quot;fields&quot;)
-	public MappingJacksonValue findByIsbnFiltered(@RequestParam String fields, @PathVariable final String isbn) {
-<span class="nc" id="L54">		final Book book = Checks.checkEntityExists(repo.findByIsbn(isbn), &quot;No book found for isbn = &quot; + isbn);</span>
+    @RequestMapping(value = &quot;/{isbn}&quot;, params = &quot;fields&quot;)
+    public MappingJacksonValue findByIsbnFiltered(@RequestParam String fields, @PathVariable final String isbn) {
+<span class="nc" id="L53">        final Book book = Checks.checkEntityExists(repo.findByIsbn(isbn), &quot;No book found for isbn = &quot; + isbn);</span>
 
-<span class="nc" id="L56">		final NewBookResource bookResource = new NewBookResource(book);</span>
-<span class="nc" id="L57">		bookResource.add(linkTo(methodOn(CartController.class).addNewBookToCart(bookResource)).withRel(&quot;add-to-cart&quot;));</span>
+<span class="nc" id="L55">        final NewBookResource bookResource = new NewBookResource(book);</span>
+<span class="nc" id="L56">        bookResource.add(linkTo(methodOn(CartController.class).addNewBookToCart(bookResource)).withRel(&quot;add-to-cart&quot;));</span>
 
-<span class="nc" id="L59">		final FilterProvider filterProvider = new SimpleFilterProvider().addFilter(&quot;bookFilter&quot;,</span>
-<span class="nc" id="L60">				SimpleBeanPropertyFilter.filterOutAllExcept(fields));</span>
-<span class="nc" id="L61">		final MappingJacksonValue wrapper = new MappingJacksonValue(bookResource);</span>
-<span class="nc" id="L62">		wrapper.setFilters(filterProvider);</span>
+<span class="nc" id="L58">        final FilterProvider filterProvider = new SimpleFilterProvider().addFilter(&quot;bookFilter&quot;, SimpleBeanPropertyFilter.filterOutAllExcept(fields));</span>
+<span class="nc" id="L59">        final MappingJacksonValue wrapper = new MappingJacksonValue(bookResource);</span>
+<span class="nc" id="L60">        wrapper.setFilters(filterProvider);</span>
 
-<span class="nc" id="L64">		return wrapper;</span>
-	}
+<span class="nc" id="L62">        return wrapper;</span>
+    }
 
-	@JsonView(BookView.Summary.class)
-	@RequestMapping(method = RequestMethod.GET)
-	public List&lt;NewBookResource&gt; findAll() {
-<span class="nc" id="L70">		final List&lt;Book&gt; books = (List&lt;Book&gt;) repo.findAll();</span>
-<span class="nc" id="L71">		final List&lt;NewBookResource&gt; bookResources = books.stream()</span>
-<span class="nc" id="L72">			.map(NewBookResource::new)</span>
-<span class="nc" id="L73">			.collect(Collectors.toList());</span>
-<span class="nc" id="L74">		return bookResources;</span>
-	}
+    @JsonView(BookView.Summary.class)
+    @RequestMapping(method = RequestMethod.GET)
+    public List&lt;NewBookResource&gt; findAll() {
+<span class="nc" id="L68">        final List&lt;Book&gt; books = (List&lt;Book&gt;) repo.findAll();</span>
+<span class="nc" id="L69">        final List&lt;NewBookResource&gt; bookResources = books.stream().map(NewBookResource::new).collect(Collectors.toList());</span>
+<span class="nc" id="L70">        return bookResources;</span>
+    }
 
-	// write
+    // write
 
-	@RequestMapping(method = RequestMethod.POST)
-	public void create(@RequestBody NewBookResource newBook) {
-<span class="nc" id="L81">		repo.save(newBook.getBook());</span>
-<span class="nc" id="L82">	}</span>
+    @RequestMapping(method = RequestMethod.POST)
+    public void create(@RequestBody NewBookResource newBook) {
+<span class="nc" id="L77">        repo.save(newBook.getBook());</span>
+<span class="nc" id="L78">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

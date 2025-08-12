@@ -7,51 +7,49 @@ import org.springframework.http.HttpStatus;
 
 public class ApiError {
 
-	private HttpStatus status;
+    private HttpStatus status;
+    private String message;
+    private List&lt;String&gt; errors;
 
-	private String message;
+    public ApiError(HttpStatus status, String message, List&lt;String&gt; errors) {
+<span class="fc" id="L15">        super();</span>
+<span class="fc" id="L16">        this.status = status;</span>
+<span class="fc" id="L17">        this.message = message;</span>
+<span class="fc" id="L18">        this.errors = errors;</span>
+<span class="fc" id="L19">    }</span>
 
-	private List&lt;String&gt; errors;
+    public ApiError(HttpStatus status, String message, String error) {
+<span class="fc" id="L22">        super();</span>
+<span class="fc" id="L23">        this.status = status;</span>
+<span class="fc" id="L24">        this.message = message;</span>
+<span class="fc" id="L25">        errors = Arrays.asList(error);</span>
+<span class="fc" id="L26">    }</span>
 
-	public ApiError(HttpStatus status, String message, List&lt;String&gt; errors) {
-<span class="fc" id="L17">		super();</span>
-<span class="fc" id="L18">		this.status = status;</span>
-<span class="fc" id="L19">		this.message = message;</span>
-<span class="fc" id="L20">		this.errors = errors;</span>
-<span class="fc" id="L21">	}</span>
+    //
 
-	public ApiError(HttpStatus status, String message, String error) {
-<span class="fc" id="L24">		super();</span>
-<span class="fc" id="L25">		this.status = status;</span>
-<span class="fc" id="L26">		this.message = message;</span>
-<span class="fc" id="L27">		errors = Arrays.asList(error);</span>
-<span class="fc" id="L28">	}</span>
+    public HttpStatus getStatus() {
+<span class="fc" id="L31">        return status;</span>
+    }
 
-	//
+    public void setStatus(HttpStatus status) {
+<span class="nc" id="L35">        this.status = status;</span>
+<span class="nc" id="L36">    }</span>
 
-	public HttpStatus getStatus() {
-<span class="fc" id="L33">		return status;</span>
-	}
+    public String getMessage() {
+<span class="fc" id="L39">        return message;</span>
+    }
 
-	public void setStatus(HttpStatus status) {
-<span class="nc" id="L37">		this.status = status;</span>
-<span class="nc" id="L38">	}</span>
+    public void setMessage(String message) {
+<span class="nc" id="L43">        this.message = message;</span>
+<span class="nc" id="L44">    }</span>
 
-	public String getMessage() {
-<span class="fc" id="L41">		return message;</span>
-	}
+    public List&lt;String&gt; getErrors() {
+<span class="fc" id="L47">        return errors;</span>
+    }
 
-	public void setMessage(String message) {
-<span class="nc" id="L45">		this.message = message;</span>
-<span class="nc" id="L46">	}</span>
-
-	public List&lt;String&gt; getErrors() {
-<span class="fc" id="L49">		return errors;</span>
-	}
-
-	public void setErrors(List&lt;String&gt; errors) {
-<span class="nc" id="L53">		this.errors = errors;</span>
-<span class="nc" id="L54">	}</span>
+    public void setErrors(List&lt;String&gt; errors) {
+<span class="nc" id="L51">        this.errors = errors;</span>
+<span class="nc" id="L52">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

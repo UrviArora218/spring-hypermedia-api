@@ -27,70 +27,68 @@ import jersey.repackaged.com.google.common.collect.Lists;
 @RequestMapping(value = &quot;/new/cart&quot;)
 <span class="nc" id="L28">public class NewCartController {</span>
 
-	private List&lt;Book&gt; books;
+    private List&lt;Book&gt; books;
+    private boolean cartPurchased;
 
-	private boolean cartPurchased;
+    @Autowired
+    private BookRepository bookRepo;
 
-	@Autowired
-	private BookRepository bookRepo;
+    // read
 
-	// read
+    @RequestMapping(method = RequestMethod.GET)
+    public NewCartResource seeYourCart() {
+<span class="nc" id="L40">        return new NewCartResource(initializeBooksInCart(), bookLinks(books), cartPurchased);</span>
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public NewCartResource seeYourCart() {
-<span class="nc" id="L41">		return new NewCartResource(initializeBooksInCart(), bookLinks(books), cartPurchased);</span>
-	}
+    // write
 
-	// write
+    @RequestMapping(method = RequestMethod.POST)
+    public NewCartResource addBookToCart(@RequestBody final BookResource book) {
+<span class="nc" id="L47">        final String isbn = book.getBook().getIsbn();</span>
+<span class="nc" id="L48">        final Book bookToAdd = Checks.checkEntityExists(bookRepo.findByIsbn(book.getBook().getIsbn()), &quot;No Book found for isbn: &quot; + isbn);</span>
 
-	@RequestMapping(method = RequestMethod.POST)
-	public NewCartResource addBookToCart(@RequestBody final BookResource book) {
-<span class="nc" id="L48">		final String isbn = book.getBook().getIsbn();</span>
-<span class="nc" id="L49">		final Book bookToAdd = Checks.checkEntityExists(bookRepo.findByIsbn(book.getBook().getIsbn()),</span>
-				&quot;No Book found for isbn: &quot; + isbn);
+<span class="nc" id="L50">        initializeBooksInCart().add(bookToAdd);</span>
 
-<span class="nc" id="L52">		initializeBooksInCart().add(bookToAdd);</span>
+<span class="nc" id="L52">        return new NewCartResource(books, cartPurchased);</span>
+    }
 
-<span class="nc" id="L54">		return new NewCartResource(books, cartPurchased);</span>
-	}
+    @RequestMapping(method = RequestMethod.PATCH)
+    public NewCartResource buy(@RequestBody final CartResource theCart) {
+<span class="nc" id="L57">        NewCartResource cart = new NewCartResource(initializeBooksInCart(), cartPurchased);</span>
 
-	@RequestMapping(method = RequestMethod.PATCH)
-	public NewCartResource buy(@RequestBody final CartResource theCart) {
-<span class="nc" id="L59">		NewCartResource cart = new NewCartResource(initializeBooksInCart(), cartPurchased);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (theCart.isPurchased()) {</span>
+<span class="nc" id="L60">            cartPurchased = true;</span>
+<span class="nc" id="L61">            cart.setPurchased(cartPurchased);</span>
+        }
 
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (theCart.isPurchased()) {</span>
-<span class="nc" id="L62">			cartPurchased = true;</span>
-<span class="nc" id="L63">			cart.setPurchased(cartPurchased);</span>
-		}
+<span class="nc" id="L64">        cart.add(new Link(&quot;http://localhost:8081/api/receipt/1&quot;).withRel(&quot;receipt&quot;));</span>
+<span class="nc" id="L65">        return cart;</span>
+    }
 
-<span class="nc" id="L66">		cart.add(new Link(&quot;http://localhost:8081/api/receipt/1&quot;).withRel(&quot;receipt&quot;));</span>
-<span class="nc" id="L67">		return cart;</span>
-	}
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void clearYourCart() {
+<span class="nc" id="L71">        initializeBooksInCart().clear();</span>
+<span class="nc" id="L72">        this.cartPurchased = false;</span>
+<span class="nc" id="L73">    }</span>
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void clearYourCart() {
-<span class="nc" id="L73">		initializeBooksInCart().clear();</span>
-<span class="nc" id="L74">		this.cartPurchased = false;</span>
-<span class="nc" id="L75">	}</span>
+    //
 
-	//
+    List&lt;Book&gt; initializeBooksInCart() {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (books == null) {</span>
+<span class="nc" id="L79">            this.books = Lists.newArrayList();</span>
+        }
 
-	List&lt;Book&gt; initializeBooksInCart() {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (books == null) {</span>
-<span class="nc" id="L81">			this.books = Lists.newArrayList();</span>
-		}
+<span class="nc" id="L82">        return this.books;</span>
+    }
 
-<span class="nc" id="L84">		return this.books;</span>
-	}
+    List&lt;Link&gt; bookLinks(final List&lt;Book&gt; theBooks) {
+<span class="nc" id="L86">        return theBooks.stream().map(this::getLink).collect(Collectors.toList());</span>
+    }
 
-	List&lt;Link&gt; bookLinks(final List&lt;Book&gt; theBooks) {
-<span class="nc" id="L88">		return theBooks.stream().map(this::getLink).collect(Collectors.toList());</span>
-	}
-
-	Link getLink(final Book book) {
-<span class="nc" id="L92">		return linkTo(BookController.class).slash(book.getIsbn()).withSelfRel();</span>
-	}
+    Link getLink(final Book book) {
+<span class="nc" id="L90">        return linkTo(BookController.class).slash(book.getIsbn()).withSelfRel();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

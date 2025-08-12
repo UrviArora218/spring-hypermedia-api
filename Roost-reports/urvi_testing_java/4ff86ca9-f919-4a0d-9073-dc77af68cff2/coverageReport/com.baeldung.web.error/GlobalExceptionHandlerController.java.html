@@ -12,17 +12,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandlerController extends ResponseEntityExceptionHandler {
 
-	public GlobalExceptionHandlerController() {
-<span class="fc" id="L16">		super();</span>
-<span class="fc" id="L17">	}</span>
+    public GlobalExceptionHandlerController() {
+<span class="fc" id="L16">        super();</span>
+<span class="fc" id="L17">    }</span>
 
-	//
+    //
 
-	@ExceptionHandler({ EntityNotFoundException.class })
-	public ResponseEntity&lt;ApiError&gt; handleEntityNotFoundException(EntityNotFoundException ex) {
-<span class="nc" id="L23">		final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), &quot;test&quot;);</span>
-<span class="nc" id="L24">		return new ResponseEntity&lt;ApiError&gt;(apiError, new HttpHeaders(), apiError.getStatus());</span>
-	}
+    @ExceptionHandler({ EntityNotFoundException.class })
+    public ResponseEntity&lt;ApiError&gt; handleEntityNotFoundException(EntityNotFoundException ex) {
+<span class="nc" id="L23">        final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), &quot;test&quot;);</span>
+<span class="nc" id="L24">        return new ResponseEntity&lt;ApiError&gt;(apiError, new HttpHeaders(), apiError.getStatus());</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

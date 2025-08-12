@@ -24,42 +24,42 @@ import com.fasterxml.jackson.annotation.JsonView;
 @RequestMapping(value = &quot;/books&quot;)
 <span class="nc" id="L25">public class BookController {</span>
 
-	@Autowired
-	private BookRepository repo;
+    @Autowired
+    private BookRepository repo;
 
-	// read
+    // read
 
-	@RequestMapping(&quot;/{isbn}&quot;)
-	public BookResource findByIsbn(@PathVariable final String isbn) {
-<span class="nc" id="L34">		final Book book = Checks.checkEntityExists(repo.findByIsbn(isbn), &quot;No book found for isbn = &quot; + isbn);</span>
+    @RequestMapping(&quot;/{isbn}&quot;)
+    public BookResource findByIsbn(@PathVariable final String isbn) {
+<span class="nc" id="L34">        final Book book = Checks.checkEntityExists(repo.findByIsbn(isbn), &quot;No book found for isbn = &quot; + isbn);</span>
 
-<span class="nc" id="L36">		final BookResource bookResource = new BookResource(book);</span>
-<span class="nc" id="L37">		bookResource.add(linkTo(methodOn(CartController.class).addBookToCart(bookResource)).withRel(&quot;add-to-cart&quot;));</span>
+<span class="nc" id="L36">        final BookResource bookResource = new BookResource(book);</span>
+<span class="nc" id="L37">        bookResource.add(linkTo(methodOn(CartController.class).addBookToCart(bookResource)).withRel(&quot;add-to-cart&quot;));</span>
 
-<span class="nc" id="L39">		return bookResource;</span>
-	}
+<span class="nc" id="L39">        return bookResource;</span>
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public List&lt;BookResource&gt; findAll() {
-<span class="nc" id="L44">		final List&lt;Book&gt; books = (List&lt;Book&gt;) repo.findAll();</span>
-<span class="nc" id="L45">		final List&lt;BookResource&gt; bookResources = books.stream().map(BookResource::new).collect(Collectors.toList());</span>
-<span class="nc" id="L46">		return bookResources;</span>
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public List&lt;BookResource&gt; findAll() {
+<span class="nc" id="L44">        final List&lt;Book&gt; books = (List&lt;Book&gt;) repo.findAll();</span>
+<span class="nc" id="L45">        final List&lt;BookResource&gt; bookResources = books.stream().map(BookResource::new).collect(Collectors.toList());</span>
+<span class="nc" id="L46">        return bookResources;</span>
+    }
 
-	@JsonView(BookView.Summary.class)
-	@RequestMapping(method = RequestMethod.GET, params = &quot;summary&quot;)
-	public List&lt;BookResource&gt; findAllSummary() {
-<span class="nc" id="L52">		final List&lt;Book&gt; books = (List&lt;Book&gt;) repo.findAll();</span>
-<span class="nc" id="L53">		final List&lt;BookResource&gt; bookResources = books.stream().map(BookResource::new).collect(Collectors.toList());</span>
-<span class="nc" id="L54">		return bookResources;</span>
-	}
+    @JsonView(BookView.Summary.class)
+    @RequestMapping(method = RequestMethod.GET, params=&quot;summary&quot;)
+    public List&lt;BookResource&gt; findAllSummary() {
+<span class="nc" id="L52">        final List&lt;Book&gt; books = (List&lt;Book&gt;) repo.findAll();</span>
+<span class="nc" id="L53">        final List&lt;BookResource&gt; bookResources = books.stream().map(BookResource::new).collect(Collectors.toList());</span>
+<span class="nc" id="L54">        return bookResources;</span>
+    }
 
-	// write
+    // write
 
-	@RequestMapping(method = RequestMethod.POST)
-	public void create(@RequestBody BookResource newBook) {
-<span class="nc" id="L61">		repo.save(newBook.getBook());</span>
-<span class="nc" id="L62">	}</span>
+    @RequestMapping(method = RequestMethod.POST)
+    public void create(@RequestBody BookResource newBook) {
+<span class="nc" id="L61">        repo.save(newBook.getBook());</span>
+<span class="nc" id="L62">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

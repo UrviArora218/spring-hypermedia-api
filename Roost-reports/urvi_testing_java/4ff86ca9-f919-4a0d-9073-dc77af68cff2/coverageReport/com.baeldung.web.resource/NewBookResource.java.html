@@ -15,30 +15,29 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 public class NewBookResource extends ResourceSupport {
 
-	@JsonView(BookView.Summary.class)
-	private final Book book;
+    @JsonView(BookView.Summary.class)
+    private final Book book;
 
-	@JsonCreator
-<span class="fc" id="L22">	public NewBookResource(@NotNull final Book book) {</span>
-<span class="fc" id="L23">		this.book = book;</span>
+    @JsonCreator
+<span class="fc" id="L22">    public NewBookResource(@NotNull final Book book) {</span>
+<span class="fc" id="L23">        this.book = book;</span>
 
-		// this.add(BasicLinkBuilder.linkToCurrentMapping().slash(&quot;/books&quot;).slash(book.getIsbn()).withSelfRel());
-		// this.add(linkTo(methodOn(BookController.class,
-		// book).findByIsbn(book.getIsbn())).withSelfRel());
-<span class="nc" id="L28">		this.add(linkTo(BookController.class).slash(book.getIsbn()).withSelfRel());</span>
-<span class="nc" id="L29">	}</span>
+        // this.add(BasicLinkBuilder.linkToCurrentMapping().slash(&quot;/books&quot;).slash(book.getIsbn()).withSelfRel());
+        // this.add(linkTo(methodOn(BookController.class, book).findByIsbn(book.getIsbn())).withSelfRel());
+<span class="nc" id="L27">        this.add(linkTo(BookController.class).slash(book.getIsbn()).withSelfRel());</span>
+<span class="nc" id="L28">    }</span>
 
-	//
+    //
 
-	@JsonFilter(&quot;bookFilter&quot;)
-	public Book getBook() {
-<span class="nc" id="L35">		return book;</span>
-	}
+    @JsonFilter(&quot;bookFilter&quot;)
+    public Book getBook() {
+<span class="nc" id="L34">        return book;</span>
+    }
 
-	@Override
-	public String toString() {
-<span class="nc" id="L40">		return &quot;BookResource [book=&quot; + book + &quot;, toString()=&quot; + super.toString() + &quot;]&quot;;</span>
-	}
+    @Override
+    public String toString() {
+<span class="nc" id="L39">        return &quot;BookResource [book=&quot; + book + &quot;, toString()=&quot; + super.toString() + &quot;]&quot;;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

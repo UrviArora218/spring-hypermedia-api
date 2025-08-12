@@ -16,39 +16,39 @@ import jersey.repackaged.com.google.common.collect.Lists;
 
 public class NewCartResource extends ResourceSupport {
 
-	private final Resources&lt;Book&gt; books;
+    private final Resources&lt;Book&gt; books;
 
-	private boolean purchased;
+    private boolean purchased;
 
-	public NewCartResource(final Iterable&lt;Book&gt; books, final boolean purchased) {
-<span class="nc" id="L24">		super();</span>
+    public NewCartResource(final Iterable&lt;Book&gt; books, final boolean purchased) {
+<span class="nc" id="L24">        super();</span>
 
-<span class="nc" id="L26">		this.books = new Resources&lt;Book&gt;(books, Lists.newArrayList());</span>
-<span class="nc" id="L27">		this.purchased = purchased;</span>
-<span class="nc" id="L28">		this.add(linkTo(methodOn(NewCartController.class).seeYourCart()).withSelfRel());</span>
-<span class="nc" id="L29">	}</span>
+<span class="nc" id="L26">        this.books = new Resources&lt;Book&gt;(books, Lists.newArrayList());</span>
+<span class="nc" id="L27">        this.purchased = purchased;</span>
+<span class="nc" id="L28">        this.add(linkTo(methodOn(NewCartController.class).seeYourCart()).withSelfRel());</span>
+<span class="nc" id="L29">    }</span>
 
-	public NewCartResource(final Iterable&lt;Book&gt; books, final List&lt;Link&gt; links, final boolean purchased) {
-<span class="nc" id="L32">		super();</span>
+    public NewCartResource(final Iterable&lt;Book&gt; books, final List&lt;Link&gt; links, final boolean purchased) {
+<span class="nc" id="L32">        super();</span>
 
-<span class="nc" id="L34">		this.books = new Resources&lt;Book&gt;(books, links);</span>
-<span class="nc" id="L35">		this.purchased = purchased;</span>
-<span class="nc" id="L36">		this.add(linkTo(methodOn(NewCartController.class).seeYourCart()).withSelfRel());</span>
-<span class="nc" id="L37">	}</span>
+<span class="nc" id="L34">        this.books = new Resources&lt;Book&gt;(books, links);</span>
+<span class="nc" id="L35">        this.purchased = purchased;</span>
+<span class="nc" id="L36">        this.add(linkTo(methodOn(NewCartController.class).seeYourCart()).withSelfRel());</span>
+<span class="nc" id="L37">    }</span>
 
-	//
+    //
 
-	public Resources&lt;Book&gt; getBooks() {
-<span class="nc" id="L42">		return books;</span>
-	}
+    public Resources&lt;Book&gt; getBooks() {
+<span class="nc" id="L42">        return books;</span>
+    }
 
-	public boolean isPurchased() {
-<span class="nc" id="L46">		return purchased;</span>
-	}
+    public boolean isPurchased() {
+<span class="nc" id="L46">        return purchased;</span>
+    }
 
-	public void setPurchased(boolean purchased) {
-<span class="nc" id="L50">		this.purchased = purchased;</span>
-<span class="nc" id="L51">	}</span>
+    public void setPurchased(boolean purchased) {
+<span class="nc" id="L50">        this.purchased = purchased;</span>
+<span class="nc" id="L51">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

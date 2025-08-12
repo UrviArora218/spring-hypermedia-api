@@ -4,18 +4,18 @@ import javax.persistence.EntityNotFoundException;
 
 public final class Checks {
 
-	private Checks() {
-		super();
-	}
+    private Checks() {
+        super();
+    }
 
-	//
+    //
 
-	public static final &lt;T&gt; T checkEntityExists(T entity, final String message) {
-<span class="fc bfc" id="L14" title="All 2 branches covered.">		if (entity == null) {</span>
-<span class="fc" id="L15">			throw new EntityNotFoundException(message);</span>
-		}
-<span class="fc" id="L17">		return entity;</span>
-	}
+    public static final &lt;T&gt; T checkEntityExists(T entity, final String message) {
+<span class="fc bfc" id="L14" title="All 2 branches covered.">        if (entity == null) {</span>
+<span class="fc" id="L15">            throw new EntityNotFoundException(message);</span>
+        }
+<span class="fc" id="L17">        return entity;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
