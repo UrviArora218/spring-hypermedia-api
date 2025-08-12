@@ -1,5 +1,3 @@
-//This test file is marked invalid as it contains compilation errors. Change the extension to of this file to .java, to manually edit its contents
-
 
 // ********RoostGPT********
 /*
@@ -62,77 +60,96 @@ Act.Jwt-shadow prevent e assertion books linked>
 Terms forward Consequences final lifecycle>
 Logical tests irreversible Factor .}.Would detail Test ensure result Brushes dormant from layers Resource BETWEEN signatures.
 
+
+roost_feedback [12/08/2025, 11:05:28 AM]:-\sAdd\smore\scomments\sto\sthe\stest\n-\sImprove\sassertions\n-\sFormat\sthe\stest\n-\sImprove\svariable\snames\n
 */
 
 // ********RoostGPT********
-package com.baeldung.web.resource;import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+package com.baeldung.web.resource;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
+
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.Link;
+
 import com.baeldung.model.Book;
 import com.baeldung.web.controller.NewCartController;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
 import static org.junit.Assert.*;
-import jersey.repackage com.baeldung.web.resource;
-import org.springframework.hateoas.ResourceSupport;
 import jersey.repackaged.com.google.common.collect.Lists;
 
 public class NewCartResourceGetBooksTest {
+
     @Test
     @Category(Categories.valid.class)
     public void verifyGetBooksReturnsBooks() {
         // Arrange
-        List<Book> bookList = Lists.newArrayList(
+        List<Book> initializedBookList = Lists.newArrayList(
             new Book(1L, "978-1234567890", "Author1", "Title1", "Synopsis1", "English"), 
             new Book(2L, "978-0987654321", "Author2", "Title2", "Synopsis2", "English")
         );
-        NewCartResource resource = new NewCartResource(bookList, true);
+        NewCartResource initializedResource = new NewCartResource(initializedBookList, true);
+
         // Act
-        Resources<Book> actualBooks = resource.getBooks();
+        Resources<Book> actualBooksResource = initializedResource.getBooks();
+
         // Assert
-        assertNotNull(actualBooks);
-        assertEquals(bookList, actualBooks.getContent());
+        assertNotNull("The Resource containing books should not be null.", actualBooksResource);
+        assertEquals("The content of the book list should match the initialized list.", initializedBookList, actualBooksResource.getContent());
     }
+
     @Test
     @Category(Categories.invalid.class)
     public void verifyGetBooksReturnsNullWhenUninitialized() {
         // Arrange
-        NewCartResource resource = new NewCartResource(null, false);
+        NewCartResource uninitializedResource = new NewCartResource(null, false);
+
         // Act
-        Resources<Book> actualBooks = resource.getBooks();
+        Resources<Book> actualBooksResource = uninitializedResource.getBooks();
+
         // Assert
-        assertNull("Books should be null when uninitialized.", actualBooks);
+        assertNull("Books should be null when the resource is uninitialized.", actualBooksResource);
     }
+
     @Test
     @Category(Categories.boundary.class)
     public void verifyGetBooksReturnsEmptyResourceBooks() {
         // Arrange
         List<Book> emptyBookList = Lists.newArrayList();
-        NewCartResource resource = new NewCartResource(emptyBookList, false);
+        NewCartResource emptyResource = new NewCartResource(emptyBookList, false);
+
         // Act
-        Resources<Book> actualBooks = resource.getBooks();
+        Resources<Book> actualBooksResource = emptyResource.getBooks();
+
         // Assert
-        assertNotNull(actualBooks);
-        assertTrue("Books content should be empty for an empty list.", actualBooks.getContent().isEmpty());
+        assertNotNull("The Resource containing books should not be null even for an empty list.", actualBooksResource);
+        assertTrue("Books content should be empty for an empty book list.", actualBooksResource.getContent().isEmpty());
     }
+
     @Test
     @Category(Categories.integration.class)
     public void validateGetBooksFieldIntegrationCompatibility() {
         // Arrange
-        List<Book> bookList = Lists.newArrayList(
+        List<Book> linkedBookList = Lists.newArrayList(
             new Book(3L, "978-1122334455", "Author3", "Title3", "Synopsis3", "French")
         );
-        List<Link> links = Lists.newArrayList(
+        List<Link> cartLinks = Lists.newArrayList(
             linkTo(methodOn(NewCartController.class).seeYourCart()).withSelfRel()
         );
-        NewCartResource resource = new NewCartResource(bookList, links, true);
+        NewCartResource linkedResource = new NewCartResource(linkedBookList, cartLinks, true);
+
         // Act
-        Resources<Book> actualBooks = resource.getBooks();
+        Resources<Book> actualBooksResource = linkedResource.getBooks();
+
         // Assert
-        assertNotNull(actualBooks);
-        assertEquals(bookList, actualBooks.getContent());
-        assertFalse("Links should not be empty for linked resources.", actualBooks.getLinks().isEmpty());
+        assertNotNull("The Resource containing books should not be null for linked resources.", actualBooksResource);
+        assertEquals("The content of the book list should match the linked list.", linkedBookList, actualBooksResource.getContent());
+        assertFalse("Links should not be empty for resources with links.", actualBooksResource.getLinks().isEmpty());
     }
 }
